@@ -1,14 +1,22 @@
 #pragma once
 
 #include "ofMain.h"
+#include "FaceSingleGlitchView.h"
+#include "FaceGridNormalView.h"
+#include "FaceSingleASsciiView.h"
+#include "IntervalSceneFirstView.h"
+#include "IntervalSceneSecondView.h"
+#include "IntervalSceneThirdView.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp, ofThread {
 
 	public:
+		~ofApp();
 		void setup();
 		void update();
 		void draw();
 
+		void threadedFunction();
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -21,4 +29,11 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
+		int sceneIndex = 0;
+		int sceneCounter = 1;
+		int sceneMaxSize = 0;
+		int sceneIntervalMillis = 5000;
+
+		vector <BaseView*> views;
+
 };

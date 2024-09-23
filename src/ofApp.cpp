@@ -1,18 +1,50 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
+ofApp::~ofApp() {
+    stopThread();
+}
+
+//--------------------------------------------------------------
 void ofApp::setup(){
-	ofLog() << "Hello World";
+    views.push_back(new FaceSingleGlitchView());
+    views.push_back(new IntervalSceneFirstView());
+    views.push_back(new FaceGridNormalView());
+    views.push_back(new IntervalSceneSecondView());
+    views.push_back(new FaceSingleASsciiView());
+    views.push_back(new IntervalSceneThirdView());
+
+    sceneMaxSize = (int)views.size();
+
+    for (int i = 0; i < views.size(); i++) {
+        views[i]->setup();
+    }
+
+    ofBackground(0);
+    ofSetVerticalSync(true);
+    //ofToggleFullscreen();
+    ofSetFrameRate(60);
+    ofHideCursor();
+    startThread();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    views[sceneIndex]->update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    views[sceneIndex]->draw();
+}
 
+//--------------------------------------------------------------
+void ofApp::threadedFunction() {
+    while (isThreadRunning()) {
+        sleep(sceneIntervalMillis);
+        sceneIndex = sceneCounter % sceneMaxSize;
+        sceneCounter++;
+    }
 }
 
 //--------------------------------------------------------------
