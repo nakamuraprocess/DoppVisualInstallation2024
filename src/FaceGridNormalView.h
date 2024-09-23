@@ -2,9 +2,20 @@
 #include "BaseView.h"
 
 class FaceGridNormalView : public BaseView {
+private:
+	ofImage* imageFacesPtr;
 
 public:
-	void setup() {
+	void setImgPtr(ofImage* ptr) {
+		if (ptr == nullptr) {
+			cout << "FaceGridNormalView::setImgPtr(ofImage* ptr) ptr is null" << endl;
+		}
+		else {
+			imageFacesPtr = ptr;
+		}
+	}
+
+	void setup(float _windowWidth, float _windowHeight) {
 
 	}
 

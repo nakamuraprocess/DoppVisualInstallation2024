@@ -4,7 +4,7 @@
 class IntervalSceneThirdView : public BaseView {
 
 public:
-	void setup() {
+	void setup(float _windowWidth, float _windowHeight) {
 
 	}
 

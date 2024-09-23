@@ -2,9 +2,20 @@
 #include "BaseView.h"
 
 class FaceSingleASsciiView : public BaseView {
+private:
+	ofImage* imageFacesPtr;
 
 public:
-	void setup() {
+	void setImgPtr(ofImage* ptr) {
+		if (ptr == nullptr) {
+			cout << "FaceSingleASsciiView::setImgPtr(ofImage* ptr) ptr is null" << endl;
+		}
+		else {
+			imageFacesPtr = ptr;
+		}
+	}
+
+	void setup(float _windowWidth, float _windowHeight) {
 
 	}
 
@@ -13,14 +24,7 @@ public:
 	}
 
 	void draw() {
-		ofPushMatrix();
 
-		ofPushStyle();
-		ofSetColor(255, 0, 0);
-		ofDrawRectangle(400, 100, 100, 100);
-
-		ofPopStyle();
-		ofPopMatrix();
 	}
 
 };

@@ -36,4 +36,10 @@ class ofApp : public ofBaseApp, ofThread {
 
 		vector <BaseView*> views;
 
+		float windoWidth;
+		float windowHeight;
+		
+		static const int faceDataMaxSize = 10;
+		ofImage imageFacesData[faceDataMaxSize];
+
 };
