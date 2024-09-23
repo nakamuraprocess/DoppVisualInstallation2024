@@ -7,6 +7,7 @@ ofApp::~ofApp() {
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+
     views.push_back(new FaceSingleGlitchView());
     views.push_back(new IntervalSceneFirstView());
     views.push_back(new FaceGridNormalView());
@@ -24,8 +25,8 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     //ofToggleFullscreen();
     ofSetFrameRate(60);
-    ofHideCursor();
-    startThread();
+    // ofHideCursor();
+    // startThread();
 }
 
 //--------------------------------------------------------------
