@@ -4,9 +4,7 @@
 #include "FaceSingleGlitchView.h"
 #include "FaceGridNormalView.h"
 #include "FaceSingleASsciiView.h"
-#include "IntervalSceneFirstView.h"
-#include "IntervalSceneSecondView.h"
-#include "IntervalSceneThirdView.h"
+#include "ParticipantsNameView.h"
 
 class ofApp : public ofBaseApp, ofThread {
 
@@ -30,13 +28,13 @@ class ofApp : public ofBaseApp, ofThread {
 		void gotMessage(ofMessage msg);
 		
 		int sceneIndex = 0;
-		int sceneCounter = 1;
+		int sceneCounter = 0;
 		int sceneMaxSize = 0;
 		int sceneIntervalMillis = 5000;
 
 		vector <BaseView*> views;
 
-		float windoWidth;
+		float windowWidth;
 		float windowHeight;
 		
 		static const int faceDataMaxSize = 10;

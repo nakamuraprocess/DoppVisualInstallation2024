@@ -11,4 +11,8 @@ public:
 
 	virtual void draw() {}
 
+	virtual void start() {}
+
+	virtual void stop() {}
+
 };

@@ -5,13 +5,13 @@
 class FaceSingleGlitchView : public BaseView {
 private:
     ofImage* imageFacesPtr;
-	int randomIndex = 0;
-	float windowWidth;
-	float windowHeight;
+    int randomIndex = 0;
+    float windowWidth;
+    float windowHeight;
     // 表示ピクセル格納
-	std::vector<ofPixels> pixels;
+    std::vector<ofPixels> pixels;
     // 読み込む画像数
-	int imgCount = 10;
+    int imgCount = 10;
     int center;
     // 解像度
     int pixelResolution = 20;
@@ -31,9 +31,9 @@ public:
         }
     }
 
-	void setup(float _windowWidth, float _windowHeight) {
-		windowWidth = _windowWidth;
-		windowHeight = _windowHeight;
+    void setup(float _windowWidth, float _windowHeight) {
+        windowWidth = _windowWidth;
+        windowHeight = _windowHeight;
 
         // pixelSize = ofGetWidth() / pixelResolution;
         pixelSize = 5;
@@ -45,10 +45,10 @@ public:
         }
 
         center = (windowWidth / 2) - (imageFacesPtr[0].getWidth() / 2);
-	}
+    }
 
-	void update() {
-		randomIndex = ofRandom(0, imgCount - 1);
+    void update() {
+        randomIndex = ofRandom(0, imgCount - 1);
 
         if (ofRandomf() > 0.3) {
             bEffectOn = true;
@@ -56,13 +56,13 @@ public:
         else {
             bEffectOn = false;
         }
-	}
+    }
 
-	void draw() {
+    void draw() {
         dispPixel();
-	}
+    }
 
-	void dispPixel() {
+    void dispPixel() {
         // ピクセル表示サイズで画像の明るさのランダム性
         ofSetLineWidth((rand() % 50) * 0.1);
         for (int i = 0; i < windowHeight; i += pixelSize) {
