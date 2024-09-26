@@ -13,14 +13,19 @@ void ofApp::setup(){
 
     // Load images
     for (int i = 0; i < faceDataMaxSize; i++) {
-        bool load = imageFacesData[i].load("images/face_" + ofToString(i) + ".jpg");
+        string faceDataPath = "images/face_" + ofToString(i) + ".jpg";
+        bool load = imageFacesData[i].load(faceDataPath);
         imageFacesData[i].resize(windowHeight, windowHeight);
         imageFacesData[i].setImageType(OF_IMAGE_COLOR);
         if (!load) {
-            ofLog() << "Failed to load image: " << "images/face_" + ofToString(i) + ".jpg";
+            cout << "Failed to load image: " << faceDataPath;
             continue;
         }
-        cout << imageFacesData[i].getWidth() << " : " << imageFacesData[i].getHeight() << " : " << imageFacesData[i].getPixels().getNumChannels() << endl;
+        cout << faceDataPath
+            << " x: " << imageFacesData[i].getWidth()
+            << " y: " << imageFacesData[i].getHeight()
+            << " c: " << imageFacesData[i].getPixels().getNumChannels()
+            << endl;
     }
 
     // Init Scenes
