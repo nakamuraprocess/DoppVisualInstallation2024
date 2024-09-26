@@ -187,7 +187,6 @@
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\BaseView.h" />
     <ClInclude Include="src\FaceGridNormalView.h" />
-    <ClInclude Include="src\FaceSingleASsciiView.h" />
     <ClInclude Include="src\FaceSingleGlitchView.h" />
     <ClInclude Include="src\ParticipantsNameView.h" />
     <ClInclude Include="..\..\..\addons\ofxShuffleText\src\ofxShuffleText.h" />

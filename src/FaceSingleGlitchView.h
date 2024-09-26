@@ -4,6 +4,7 @@
 
 class FaceSingleGlitchView : public BaseView {
 private:
+    bool bAfterStarted;
     ofImage* imageFacesPtr;
     int randomIndex = 0;
     float windowWidth;
@@ -107,4 +108,18 @@ public:
             }
         }
 	}
+
+    void start() {
+        // Do something
+
+        bAfterStarted = true;
+    }
+
+    void stop() {
+        if (bAfterStarted) {
+            bAfterStarted = false;
+        }
+        // Do something
+
+    }
 };

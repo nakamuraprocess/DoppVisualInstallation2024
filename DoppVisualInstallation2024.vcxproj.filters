@@ -38,9 +38,6 @@
     <ClInclude Include="src\FaceGridNormalView.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\FaceSingleASsciiView.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\FaceSingleGlitchView.h">
       <Filter>src</Filter>
     </ClInclude>

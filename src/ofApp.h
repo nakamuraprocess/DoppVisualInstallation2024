@@ -3,7 +3,6 @@
 #include "ofMain.h"
 #include "FaceSingleGlitchView.h"
 #include "FaceGridNormalView.h"
-#include "FaceSingleASsciiView.h"
 #include "ParticipantsNameView.h"
 
 class ofApp : public ofBaseApp, ofThread {

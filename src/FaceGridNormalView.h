@@ -3,6 +3,7 @@
 
 class FaceGridNormalView : public BaseView {
 private:
+	bool bAfterStarted;
 	ofImage* imageFacesPtr;
 
 public:
@@ -34,4 +35,17 @@ public:
 		ofPopMatrix();
 	}
 
+	void start() {
+		// Do something
+
+		bAfterStarted = true;
+	}
+
+	void stop() {
+		if (bAfterStarted) {
+			bAfterStarted = false;
+		}
+		// Do something
+
+	}
 };
