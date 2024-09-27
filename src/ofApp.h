@@ -39,6 +39,6 @@ class ofApp : public ofBaseApp {
 		static const int faceDataMaxSize = 10;
 		ofImage imageFacesData[faceDataMaxSize];
 		
-		float timerOfLapTime = 0.0;
-		float timerOfSleepTime = 5.0;
+		float timerLapTime = 0.0;
+		float timerSleepTime = 5.0;
 };

@@ -56,9 +56,9 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::timer(float now) {
-    float timer = now - timerOfLapTime;
-    if (timer >= timerOfSleepTime) {
-        timerOfLapTime = now;
+    float timer = now - timerLapTime;
+    if (timer >= timerSleepTime) {
+        timerLapTime = now;
         sceneIndex = sceneCounter % (int)views.size();
         for (int i = 0; i < views.size(); i++) {
             if (sceneIndex == i) {
