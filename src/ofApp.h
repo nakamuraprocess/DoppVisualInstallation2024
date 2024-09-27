@@ -5,7 +5,7 @@
 #include "FaceGridNormalView.h"
 #include "ParticipantsNameView.h"
 
-class ofApp : public ofBaseApp, ofThread {
+class ofApp : public ofBaseApp {
 
 	public:
 		~ofApp();
@@ -13,7 +13,7 @@ class ofApp : public ofBaseApp, ofThread {
 		void update();
 		void draw();
 
-		void threadedFunction();
+		void timer(float now);
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -27,7 +27,7 @@ class ofApp : public ofBaseApp, ofThread {
 		void gotMessage(ofMessage msg);
 		
 		int sceneIndex = 0;
-		int sceneCounter = 0;
+		int sceneCounter = 1;
 		int sceneMaxSize = 0;
 		int sceneIntervalMillis = 5000;
 
@@ -38,5 +38,7 @@ class ofApp : public ofBaseApp, ofThread {
 		
 		static const int faceDataMaxSize = 10;
 		ofImage imageFacesData[faceDataMaxSize];
-
+		
+		float timerOfLapTime = 0.0;
+		float timerOfSleepTime = 5.0;
 };

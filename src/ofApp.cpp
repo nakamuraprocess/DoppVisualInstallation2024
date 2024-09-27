@@ -2,8 +2,7 @@
 
 //--------------------------------------------------------------
 ofApp::~ofApp() {
-    waitForThread();
-    stopThread();
+
 }
 
 //--------------------------------------------------------------
@@ -42,11 +41,11 @@ void ofApp::setup(){
     //ofToggleFullscreen();
     ofSetFrameRate(60);
     ofHideCursor();
-    startThread();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    timer(ofGetElapsedTimef());
     views[sceneIndex]->update();
 }
 
@@ -56,8 +55,10 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::threadedFunction() {
-    while (isThreadRunning()) {
+void ofApp::timer(float now) {
+    float timer = now - timerOfLapTime;
+    if (timer >= timerOfSleepTime) {
+        timerOfLapTime = now;
         sceneIndex = sceneCounter % (int)views.size();
         for (int i = 0; i < views.size(); i++) {
             if (sceneIndex == i) {
@@ -68,9 +69,9 @@ void ofApp::threadedFunction() {
             }
         }
         sceneCounter++;
-        sleep(sceneIntervalMillis);
     }
 }
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
