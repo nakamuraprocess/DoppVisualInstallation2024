@@ -3,7 +3,7 @@
 class BaseView {
 public:
 	
-	virtual void setImgPtr(ofImage* ptr) {}
+	virtual void setImgPtr(ofImage* ptr, int size) {}
 
 	virtual void setup(float _windowWidth, float _windowHeight) {}
 

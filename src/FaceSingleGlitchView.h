@@ -5,72 +5,100 @@
 class FaceSingleGlitchView : public BaseView {
 private:
     bool bAfterStarted;
-    ofImage* imageFacesPtr;
-    int randomIndex = 0;
     float windowWidth;
     float windowHeight;
+
+    ofFbo fbo;
+
+    ofImage* imageFacesPtr;
+    int randomIndex = 0;
+
     // 表示ピクセル格納
-    std::vector<ofPixels> pixels;
+    ofPixels pixels;
     // 読み込む画像数
-    int imgCount = 10;
+    int imageMaxSize;
     int center;
     // 解像度
     int pixelResolution = 20;
     // 解像度より算出または任意指定
-    int pixelSize;
-    bool bEffectOn;
+    int pixelSize = 2;
+
     // エフェクトテスト作動
     int testFlag = 0;
+    int noiseFlag = 0;
+    int cnt[2];
+    int cnt_idx = 1;
 
 public:
-    void setImgPtr(ofImage* ptr) {
+    void setImgPtr(ofImage* ptr, const int size) {
         if (ptr == nullptr) {
             cout << "FaceSingleGlitchView::setImgPtr(ofImage* ptr) ptr is null" << endl;
         }
         else {
             imageFacesPtr = ptr;
+            imageMaxSize = size;
         }
     }
 
     void setup(float _windowWidth, float _windowHeight) {
         windowWidth = _windowWidth;
         windowHeight = _windowHeight;
-
-        // pixelSize = ofGetWidth() / pixelResolution;
-        pixelSize = 5;
-
-
-        // 画像データのビットマップ情報を配列に格納
-        for (int i = 0; i < imgCount; i++) {
-            pixels.push_back(imageFacesPtr[i].getPixels());
-        }
-
         center = (windowWidth / 2) - (imageFacesPtr[0].getWidth() / 2);
+        fbo.allocate(imageFacesPtr[0].getWidth(), imageFacesPtr[0].getHeight(), GL_RGB, 24);
+        fbo.setAnchorPoint(windowHeight* 0.5, 0);
     }
 
     void update() {
-        randomIndex = ofRandom(0, imgCount - 1);
+        randomIndex = ofRandom(0, imageMaxSize - 1);
+        pixels = imageFacesPtr[randomIndex].getPixels();
+        
+        // インターバルの時
+        if (cnt_idx) {
+            cnt[cnt_idx]--;
 
-        if (ofRandomf() > 0.3) {
-            bEffectOn = true;
+            if (cnt[cnt_idx] < 0) {
+                // ofLog() << "NOISE";
+                cnt[cnt_idx] = ofRandom(1, 20);
+                noiseFlag = 1;
+                cnt_idx = 0;
+            }
         }
+        // ノイズ発生中
         else {
-            bEffectOn = false;
+            cnt[cnt_idx]--;
+
+            if (cnt[cnt_idx] < 0) {
+                // ofLog() << "INTERVAL";
+                cnt[cnt_idx] = ofRandom(1, 10);
+                noiseFlag = 0;
+                cnt_idx = 1;
+            }
         }
+
+        fbo.begin();
+        ofClear(0);
+        ofPushMatrix();
+        ofTranslate(-center, 0);
+        dispPixel();
+        ofPopMatrix();
+        fbo.end();
     }
 
     void draw() {
-        dispPixel();
+        ofPushMatrix();
+        fbo.draw(windowWidth * 0.5, 0, windowHeight, windowHeight);
+        ofPopMatrix();
     }
 
     void dispPixel() {
         // ピクセル表示サイズで画像の明るさのランダム性
         ofSetLineWidth((rand() % 50) * 0.1);
-        for (int i = 0; i < windowHeight; i += pixelSize) {
+
+        for (int i = 0; i < pixels.getHeight(); i += pixelSize) {
             int rnd_size = 0;
             // ofSetLineWidth(rand() % 5);
             // カメラで手をなぞるとそのy座標でずれやすくなるとか
-            if (bEffectOn || testFlag) {
+            if (testFlag || noiseFlag) {
                 // 乱れる行数
                 // int rnd_row = rand() % 50;
 
@@ -90,24 +118,13 @@ public:
                 rnd_size *= dir;
             }
 
-            for (int j = 0; j < windowHeight; j += pixelSize) {
-                ofColor col = pixels[randomIndex].getColor(j, i);
-
-                /*
-                int r = rand() % 255;
-                int g = rand() % 255;
-                int b = rand() % 255;
-                */
-
+            for (int j = 0; j < pixels.getWidth(); j += pixelSize) {
+                ofColor col = pixels.getColor(j, i);
                 ofSetColor(col);
                 ofDrawRectangle(center + j + rnd_size, i, pixelSize, pixelSize);
-
-                // タイル風
-                // 原因不明
-                // ofRect(center + j + rnd_size, i, 8, 8);
             }
         }
-	}
+    }
 
     void start() {
         // Do something

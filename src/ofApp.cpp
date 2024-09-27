@@ -14,7 +14,6 @@ void ofApp::setup(){
     for (int i = 0; i < faceDataMaxSize; i++) {
         string faceDataPath = "images/face_" + ofToString(i) + ".jpg";
         bool load = imageFacesData[i].load(faceDataPath);
-        imageFacesData[i].resize(windowHeight, windowHeight);
         imageFacesData[i].setImageType(OF_IMAGE_COLOR);
         if (!load) {
             cout << "Failed to load image: " << faceDataPath;
@@ -30,9 +29,11 @@ void ofApp::setup(){
     // Init Scenes
     views.push_back(new FaceSingleGlitchView());
     views.push_back(new ParticipantsNameView());
-    views.push_back(new FaceSingleGlitchView());
+    views.push_back(new FaceGridNormalView());
+    views.push_back(new ParticipantsNameView());
+
     for (int i = 0; i < views.size(); i++) {
-        views[i]->setImgPtr(imageFacesData);
+        views[i]->setImgPtr(imageFacesData, faceDataMaxSize);
         views[i]->setup(windowWidth, windowHeight);
     }
 
