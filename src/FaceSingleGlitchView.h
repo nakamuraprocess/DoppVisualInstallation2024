@@ -11,17 +11,10 @@ private:
     ofFbo fbo;
 
     ofImage* imageFacesPtr;
-    int randomIndex = 0;
-
-    // 表示ピクセル格納
-    ofPixels pixels;
-    // 読み込む画像数
     int imageMaxSize;
+    int randomIndex = 0;
+    float rowHeight = 2.0;
     int center;
-    // 解像度
-    int pixelResolution = 20;
-    // 解像度より算出または任意指定
-    int pixelSize = 2;
 
     // エフェクトテスト作動
     int testFlag = 0;
@@ -50,7 +43,6 @@ public:
 
     void update() {
         randomIndex = ofRandom(0, imageMaxSize - 1);
-        pixels = imageFacesPtr[randomIndex].getPixels();
         
         // インターバルの時
         if (cnt_idx) {
@@ -91,10 +83,7 @@ public:
     }
 
     void dispPixel() {
-        // ピクセル表示サイズで画像の明るさのランダム性
-        ofSetLineWidth((rand() % 50) * 0.1);
-
-        for (int i = 0; i < pixels.getHeight(); i += pixelSize) {
+        for (int i = 0; i < imageFacesPtr[randomIndex].getHeight() / rowHeight; i++) {
             int rnd_size = 0;
             // ofSetLineWidth(rand() % 5);
             // カメラで手をなぞるとそのy座標でずれやすくなるとか
@@ -118,11 +107,7 @@ public:
                 rnd_size *= dir;
             }
 
-            for (int j = 0; j < pixels.getWidth(); j += pixelSize) {
-                ofColor col = pixels.getColor(j, i);
-                ofSetColor(col);
-                ofDrawRectangle(center + j + rnd_size, i, pixelSize, pixelSize);
-            }
+            imageFacesPtr[randomIndex].drawSubsection(center + rnd_size, i * rowHeight, fbo.getWidth(), 1 * rowHeight, 0, i * rowHeight, fbo.getWidth(), rowHeight);
         }
     }
 
