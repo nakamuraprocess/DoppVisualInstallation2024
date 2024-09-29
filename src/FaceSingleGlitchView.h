@@ -37,7 +37,7 @@ public:
         windowWidth = _windowWidth;
         windowHeight = _windowHeight;
         center = (windowWidth / 2) - (imageFacesPtr[0].getWidth() / 2);
-        fbo.allocate(imageFacesPtr[0].getWidth(), imageFacesPtr[0].getHeight(), GL_RGB, 24);
+        fbo.allocate(imageFacesPtr[0].getWidth(), imageFacesPtr[0].getHeight(), GL_RGB);
         fbo.setAnchorPoint(windowHeight* 0.5, 0);
     }
 

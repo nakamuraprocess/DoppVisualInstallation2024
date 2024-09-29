@@ -48,7 +48,7 @@ public:
 		w_img = windowWidth / w_blocks;
 		h_img = windowHeight / h_blocks;
 
-		fbo.allocate(windowWidth, windowHeight, GL_RGB, 24);
+		fbo.allocate(windowWidth, windowHeight, GL_RGB);
 	}
 
 	void update() {
