@@ -16,12 +16,14 @@ private:
 	float w_blocks = 10;
 	float h_blocks = 10;
 
-	// 各マスのカウントタイミング
-	// nが1-100,nの倍数の時にそのマスの写真を切り替える
-	int cnt[10][10];
+	// nフレームごとに行の画像を切替
+	int changeRowFrame = 5;
+	// 切り替える行
+	int activeRow = 0;
 
-	// 切替速度
-	int cnt_speed[10][10];
+	// 各マスで表示する写真のidx
+	int imgGridIdx[10][10];
+
 	float w_img;
 	float h_img;
 	// 読み込む画像数
@@ -46,12 +48,6 @@ public:
 		w_img = windowWidth / w_blocks;
 		h_img = windowHeight / h_blocks;
 
-		for (int j = 0; j < h_blocks; j++) {
-			for (int i = 0; i < w_blocks; i++) {
-				cnt_speed[j][i] = 1;
-			}
-		}
-
 		fbo.allocate(windowWidth, windowHeight, GL_RGB, 24);
 	}
 
@@ -60,6 +56,11 @@ public:
 
 		if (frame > 1000) {
 			frame = 1;
+		}
+
+		if (frame % changeRowFrame == 0) {
+			++activeRow;
+			activeRow %= 10;
 		}
 
 		fbo.begin();
@@ -76,11 +77,10 @@ public:
 		for (int j = 0; j < h_blocks; j++) {
 			for (int i = 0; i < h_blocks; i++) {
 				// 画像表示
-				imageFacesPtr[cnt[j][i]].draw(i * w_img, 20 + j * h_img, w_img, w_img);
+				imageFacesPtr[imgGridIdx[j][i]].draw(i * w_img, 20 + j * h_img, w_img, w_img);
 
-				if (frame % cnt_speed[j][i] == 0 || true) {
-					cnt[j][i] = ofRandom(0, imageMaxSize - 1);
-					cnt_speed[j][i] = ofRandom(1, 10) * 10;
+				if (activeRow == j) {
+					imgGridIdx[j][i] = ofRandom(0, imageMaxSize - 1);
 				}
 			}
 		}
