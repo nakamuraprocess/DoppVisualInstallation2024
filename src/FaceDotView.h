@@ -17,10 +17,14 @@ private:
     int center;
 
     // ‰ð‘œ“x
-    float dotRadius = 3;
+    float dotSize = 25;
 
-    int wPixels;
-    int hPixels;
+    int imageWidth;
+    int imageHeight;
+
+    static const int maxImageSize = 159;
+
+    ofPixels imageFacesPixel[maxImageSize];
 
 public:
     void setImgPtr(ofImage* ptr, const int size) {
@@ -40,8 +44,12 @@ public:
         fbo.allocate(imageFacesPtr[0].getWidth(), imageFacesPtr[0].getHeight(), GL_RGB, 24);
         fbo.setAnchorPoint(windowHeight * 0.5, 0);
 
-        wPixels = imageFacesPtr[0].getWidth();
-        hPixels = imageFacesPtr[0].getHeight();
+        imageWidth = imageFacesPtr[0].getWidth();
+        imageHeight = imageFacesPtr[0].getHeight();
+
+        for (int i = 0; i < maxImageSize; i++) {
+            imageFacesPixel[i] = imageFacesPtr[i].getPixels();
+        }
 
         ofSetCircleResolution(60);
     }
@@ -65,17 +73,17 @@ public:
     }
 
     void dispPixel() {
-        ofSetColor(255);
-        // imageFacesPtr[randomIndex].draw(center, 0);
-        for (int h = 0; h < hPixels; h++) {
-            for (int w = 0; w < wPixels; w++) {
+        for (int h = 0; h < imageHeight; h += dotSize) {
+            for (int w = 0; w < imageWidth; w += dotSize) {
                 // ‚»‚ÌÀ•W‚Ì–¾‚é‚³‚ðŽæ“¾
-                ofColor col = imageFacesPtr[randomIndex].getColor(h, w);
-                float rawLight = col.getBrightness();
-                float mappedLight = ofMap(rawLight, 0, 255, 0, dotRadius);
+                ofColor col = imageFacesPixel[randomIndex].getColor(w, h);
+                float monoColor = col.getBrightness();
+                float mappedLightSize = ofMap(monoColor, 0, 255, 0, dotSize);
                 ofSetColor(col);
+                // ofSetColor(monoColor);
 
-                ofDrawCircle(w * dotRadius * 2, h * dotRadius * 2, dotRadius);
+                // ofDrawCircle(center + w, h, mappedLightSize);
+                ofDrawRectangle(center + w, h, mappedLightSize, mappedLightSize);
             }
         }
     }
