@@ -17,9 +17,9 @@ private:
 	float h_blocks = 10;
 
 	// nフレームごとに行の画像を切替
-	int changeRowFrame = 5;
+	int changeRowFrame = 3;
 	// 切り替える行
-	int activeRow = 0;
+	int activeRow[10];
 
 	// 各マスで表示する写真のidx
 	int imgGridIdx[10][10];
@@ -59,8 +59,7 @@ public:
 		}
 
 		if (frame % changeRowFrame == 0) {
-			++activeRow;
-			activeRow %= 10;
+			setActiveRow();
 		}
 
 		fbo.begin();
@@ -79,10 +78,19 @@ public:
 				// 画像表示
 				imageFacesPtr[imgGridIdx[j][i]].draw(i * w_img, 20 + j * h_img, w_img, w_img);
 
-				if (activeRow == j) {
+				if (activeRow[j]) {
 					imgGridIdx[j][i] = ofRandom(0, imageMaxSize - 1);
 				}
 			}
+			if (activeRow[j]) {
+				activeRow[j] = 0;
+			}
+		}
+	}
+
+	void setActiveRow() {
+		for (int i = 0; i < h_blocks; i++) {
+			activeRow[i] = static_cast<int>(ofRandom(0, 10)) % 2;
 		}
 	}
 
