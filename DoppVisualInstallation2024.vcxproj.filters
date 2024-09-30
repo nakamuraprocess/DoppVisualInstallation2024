@@ -50,6 +50,9 @@
     <ClInclude Include="..\..\..\addons\ofxShuffleText\src\ofxShuffleText.h">
       <Filter>addons\ofxShuffleText\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\ProjectNameTransitionView.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

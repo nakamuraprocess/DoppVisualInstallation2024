@@ -31,6 +31,8 @@ void ofApp::setup(){
     views.push_back(new ParticipantsNameView());
     views.push_back(new FaceGridNormalView());
     views.push_back(new ParticipantsNameView());
+    views.push_back(new ProjectNameTransitionView());
+    views.push_back(new ParticipantsNameView());
 
     for (int i = 0; i < views.size(); i++) {
         views[i]->setImgPtr(imageFacesData, faceDataMaxSize);
