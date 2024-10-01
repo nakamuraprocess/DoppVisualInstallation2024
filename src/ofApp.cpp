@@ -64,7 +64,8 @@ void ofApp::timer(float now) {
     float timer = now - timerLapTime;
     if (timer >= timerSleepTime) {
         timerLapTime = now;
-        sceneIndex = sceneCounter % (int)views.size();
+        sceneIndex++;
+        sceneIndex %= (int)views.size();
         for (int i = 0; i < views.size(); i++) {
             if (sceneIndex == i) {
                 views[sceneIndex]->start();
@@ -73,7 +74,6 @@ void ofApp::timer(float now) {
                 views[i]->stop();
             }
         }
-        sceneCounter++;
     }
 }
 
