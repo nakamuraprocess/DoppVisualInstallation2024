@@ -16,18 +16,12 @@ private:
 	float w_blocks = 10;
 	float h_blocks = 10;
 
-	// nフレームごとに行の画像を切替
-	int changeRowFrame = 5;
-	// 切り替える行
-	int activeRow = 0;
-
 	// 各マスで表示する写真のidx
 	int imgGridIdx[10][10];
 
 	float w_img;
 	float h_img;
-	// 読み込む画像数
-	int frame = 0;
+
 
 public:
 	void setImgPtr(ofImage* ptr, int size) {
@@ -49,20 +43,21 @@ public:
 		h_img = windowHeight / h_blocks;
 
 		fbo.allocate(windowWidth, windowHeight, GL_RGB);
+
+		for (int j = 0; j < h_blocks; j++) {
+			for (int i = 0; i < w_blocks; i++) {
+				imgGridIdx[j][i] = ofRandom(0, imageMaxSize - 1);
+			}
+		}
 	}
 
 	void update() {
-		++frame;
-
-		if (frame > 1000) {
-			frame = 1;
+		for (int j = 0; j < h_blocks; j++) {
+			for (int i = 0; i < w_blocks; i++) {
+				imgGridIdx[j][i] = ofRandom(0, imageMaxSize - 1);
+			}
 		}
-
-		if (frame % changeRowFrame == 0) {
-			++activeRow;
-			activeRow %= 10;
-		}
-
+		
 		fbo.begin();
 		ofClear(255);
 		dispPict();
@@ -75,13 +70,8 @@ public:
 
 	void dispPict() {
 		for (int j = 0; j < h_blocks; j++) {
-			for (int i = 0; i < h_blocks; i++) {
-				// 画像表示
+			for (int i = 0; i < w_blocks; i++) {
 				imageFacesPtr[imgGridIdx[j][i]].draw(i * w_img, 20 + j * h_img, w_img, w_img);
-
-				if (activeRow == j) {
-					imgGridIdx[j][i] = ofRandom(0, imageMaxSize - 1);
-				}
 			}
 		}
 	}

@@ -27,10 +27,14 @@ void ofApp::setup(){
     }
 
     // Init Scenes
-    views.push_back(new FaceSingleGlitchView());
-    views.push_back(new ParticipantsNameView());
-    views.push_back(new FaceGridNormalView());
-    views.push_back(new ParticipantsNameView());
+    BaseView* faceSingleGlitchView = new FaceSingleGlitchView();
+    BaseView* faceGridNormalView = new FaceGridNormalView();
+    BaseView* participantsNameView = new ParticipantsNameView();
+
+    views.push_back(faceSingleGlitchView);
+    views.push_back(participantsNameView);
+    views.push_back(faceGridNormalView);
+    views.push_back(participantsNameView);
 
     for (int i = 0; i < views.size(); i++) {
         views[i]->setImgPtr(imageFacesData, faceDataMaxSize);

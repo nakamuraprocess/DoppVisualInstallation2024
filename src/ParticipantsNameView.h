@@ -57,11 +57,9 @@ public:
 	}
 
 	void update() {
-		if (bAfterStarted) {
-			shuffleLocation.update();
-			for (int i = 0; i < nameTextRange; i++) {
-				shuffleParticipants[i].update();
-			}
+		shuffleLocation.update();
+		for (int i = 0; i < nameTextRange; i++) {
+			shuffleParticipants[i].update();
 		}
 	}
 
@@ -69,13 +67,11 @@ public:
 		ofPushMatrix();
 		ofPushStyle();
 
-		if (bAfterStarted) {
-			ofSetColor(255);
-			shuffleLocation.draw(20, 34);;
-			for (int i = 0; i < nameTextRange; i++) {
-				float height = fLineHeight * (i + 1);
-				shuffleParticipants[i].draw(20, height + 34);
-			}
+		ofSetColor(255);
+		shuffleLocation.draw(20, 34);;
+		for (int i = 0; i < nameTextRange; i++) {
+			float height = fLineHeight * (i + 1);
+			shuffleParticipants[i].draw(20, height + 34);
 		}
 
 		ofPopStyle();
