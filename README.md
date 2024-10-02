@@ -28,6 +28,9 @@ make Release -C openFrameworks/libs/openFrameworksCompiled/project
 ```
 SSHでプロジェクトを起動するためのパス追加
 ```bash
+nano .bash_profile
+```
+```bash
 export DISPLAY=:0
 ```
 試しにexampleをコンパイルする
