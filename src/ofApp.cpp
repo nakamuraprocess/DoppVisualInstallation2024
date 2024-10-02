@@ -7,19 +7,19 @@ ofApp::~ofApp() {
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    windowWidth = ofGetWidth();
-    windowHeight = ofGetHeight();
+    windowWidth = 600;
+    windowHeight = 1024;
 
     // Load images
     for (int i = 0; i < faceDataMaxSize; i++) {
         string faceDataPath = "images/face_" + ofToString(i) + ".jpg";
         if (imageFacesData[i].load(faceDataPath)) {
             imageFacesData[i].setImageType(OF_IMAGE_COLOR);
-            cout << faceDataPath
+            /*cout << faceDataPath
             << " x: " << imageFacesData[i].getWidth()
             << " y: " << imageFacesData[i].getHeight()
             << " c: " << imageFacesData[i].getPixels().getNumChannels()
-            << endl;
+            << endl;*/
         }
         else {
             cout << "Failed to load image: " << faceDataPath;
@@ -44,8 +44,7 @@ void ofApp::setup(){
     ofBackground(0);
     ofHideCursor();
     ofSetVerticalSync(true);
-    ofSetFrameRate(60);
-    ofToggleFullscreen();
+    ofSetFrameRate(0);
 }
 
 //--------------------------------------------------------------
