@@ -56,7 +56,7 @@ PLATFORM_LIBRARIES += openmaxil　←コメントアウトする　#PLATFORM_LIB
 cd openFrameworks/apps/myApps
 ```
 ```bash
-git clone https://github.com/nakamuraprocess/DoppVisualInstallation2024
+git clone https://github.com/nakamuraprocess/DoppVisualInstallation2024.git
 ```
 使用アドオン
 ofxShuffleText
@@ -66,7 +66,14 @@ cd openFrameworks/addons
 ```bash
 git clone https://github.com/wtshm/ofxShuffleText.git
 ```
-
+アプリをコンパイルする
+```bash
+make Release -C openFrameworks/apps/myApps/DoppVisualInstallation2024
+```
+実行(dataディレクトリはscpなどで転送しておく)
+```bash
+make RunRelease -C openFrameworks/apps/myApps/DoppVisualInstallation2024
+```
 ### ※備考 ###
 新しいプロジェクトを作成する（projectGeneratorは実行できないためemptyExampleをコピー）
 ```bash
