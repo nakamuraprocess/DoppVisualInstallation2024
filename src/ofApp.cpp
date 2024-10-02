@@ -13,17 +13,17 @@ void ofApp::setup(){
     // Load images
     for (int i = 0; i < faceDataMaxSize; i++) {
         string faceDataPath = "images/face_" + ofToString(i) + ".jpg";
-        bool load = imageFacesData[i].load(faceDataPath);
-        imageFacesData[i].setImageType(OF_IMAGE_COLOR);
-        if (!load) {
-            cout << "Failed to load image: " << faceDataPath;
-            continue;
-        }
-        cout << faceDataPath
+        if (imageFacesData[i].load(faceDataPath)) {
+            imageFacesData[i].setImageType(OF_IMAGE_COLOR);
+            cout << faceDataPath
             << " x: " << imageFacesData[i].getWidth()
             << " y: " << imageFacesData[i].getHeight()
             << " c: " << imageFacesData[i].getPixels().getNumChannels()
             << endl;
+        }
+        else {
+            cout << "Failed to load image: " << faceDataPath;
+        }
     }
 
     // Init Scenes
@@ -42,10 +42,10 @@ void ofApp::setup(){
     }
 
     ofBackground(0);
-    ofSetVerticalSync(true);
-    //ofToggleFullscreen();
-    ofSetFrameRate(60);
     ofHideCursor();
+    ofSetVerticalSync(true);
+    ofSetFrameRate(60);
+    ofToggleFullscreen();
 }
 
 //--------------------------------------------------------------

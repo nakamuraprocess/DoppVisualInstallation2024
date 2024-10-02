@@ -27,10 +27,6 @@ class ofApp : public ofBaseApp {
 		void gotMessage(ofMessage msg);
 		
 		int sceneIndex = 0;
-		int sceneCounter = 1;
-		int sceneMaxSize = 0;
-		int sceneIntervalMillis = 5000;
-
 		vector <BaseView*> views;
 
 		float windowWidth;
