@@ -26,7 +26,7 @@ sudo openFrameworks/scripts/linux/debian/install_dependencies.sh
 ```bash
 make Release -C openFrameworks/libs/openFrameworksCompiled/project
 ```
-SSHでプロジェクトを起動するためのパス追加
+SSHでアプリを実行するためのパス追加
 ```bash
 nano .bash_profile
 ```
@@ -51,7 +51,24 @@ nano openFrameworks/libs/openFrameworksCompiled/project/linuxarmv6l/config.linux
 ```bash
 PLATFORM_LIBRARIES += openmaxil　←コメントアウトする　#PLATFORM_LIBRARIES += openmaxil
 ```
-プロジェクトを作成する（projectGeneratorは実行できないためemptyExampleをコピー）
+アプリのクローン
+```bash
+cd openFrameworks/apps/myApps
+```
+```bash
+git clone https://github.com/nakamuraprocess/DoppVisualInstallation2024
+```
+使用アドオン
+ofxShuffleText
+```bash
+cd openFrameworks/addons
+```
+```bash
+git clone https://github.com/wtshm/ofxShuffleText.git
+```
+
+### ※備考 ###
+新しいプロジェクトを作成する（projectGeneratorは実行できないためemptyExampleをコピー）
 ```bash
 cp -R openFrameworks/apps/myApps/emptyExample openFrameworks/apps/myApps/MyAppProject
 ```
