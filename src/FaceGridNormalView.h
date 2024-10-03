@@ -65,7 +65,11 @@ public:
 	}
 
 	void draw() {
+		ofPushMatrix();
+		ofTranslate(windowHeight, 0);
+		ofRotate(90);
 		fbo.draw(0, 0);
+		ofPopMatrix();
 	}
 
 	void dispPict() {

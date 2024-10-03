@@ -4,13 +4,18 @@
 
 class ParticipantsNameView : public BaseView {
 private:
+	bool bAfterStarted;
+	float windowWidth;
+	float windowHeight;
+
+	ofFbo fbo;
+
 	float fLineHeight;
 	int currentNameTextSize;
 	static const int locationSize = 5;
 	static const int nameTextRange = 28;
 	int locationCounter = 0;
 	int participantCounter = 0;
-	bool bAfterStarted;
 
 	ofTrueTypeFont font;
 	string textFiles[locationSize];
@@ -21,6 +26,9 @@ private:
 
 public:
 	void setup(float _windowWidth, float _windowHeight) {
+		windowWidth = _windowWidth;
+		windowHeight = _windowHeight;
+
 		textFiles[0] = "Tokyo College of Music";
 		locations[0] = "- Tokyo College of Music";
 		textFiles[1] = "Tokyo Denki University";
