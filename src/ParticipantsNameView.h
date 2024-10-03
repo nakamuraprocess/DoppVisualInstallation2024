@@ -62,6 +62,8 @@ public:
 			shuffleParticipants[i].setup(font, "");
 			shuffleParticipants[i].setRandomChars(OFX_SHUFFLE_TEXT_NUMBERS | OFX_SHUFFLE_TEXT_UPPER_LETTERS | OFX_SHUFFLE_TEXT_LOWER_LETTERS | OFX_SHUFFLE_TEXT_SYMBOLS);
 		}
+
+		fbo.allocate(windowWidth, windowHeight, GL_RGB);
 	}
 
 	void update() {
@@ -69,9 +71,9 @@ public:
 		for (int i = 0; i < nameTextRange; i++) {
 			shuffleParticipants[i].update();
 		}
-	}
 
-	void draw() {
+		fbo.begin();
+		ofClear(0);
 		ofPushMatrix();
 		ofPushStyle();
 
@@ -83,6 +85,15 @@ public:
 		}
 
 		ofPopStyle();
+		ofPopMatrix();
+		fbo.end();
+	}
+
+	void draw() {
+		ofPushMatrix();
+		ofTranslate(windowHeight, 0);
+		ofRotate(90);
+		fbo.draw(0, 0);
 		ofPopMatrix();
 	}
 
