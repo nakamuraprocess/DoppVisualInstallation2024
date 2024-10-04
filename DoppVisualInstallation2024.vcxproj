@@ -190,6 +190,7 @@
     <ClInclude Include="src\FaceSingleGlitchView.h" />
     <ClInclude Include="src\ParticipantsNameView.h" />
     <ClInclude Include="..\..\..\addons\ofxShuffleText\src\ofxShuffleText.h" />
+    <ClInclude Include="src\SphereNameView.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

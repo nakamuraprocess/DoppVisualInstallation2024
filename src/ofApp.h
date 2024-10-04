@@ -4,6 +4,7 @@
 #include "FaceSingleGlitchView.h"
 #include "FaceGridNormalView.h"
 #include "ParticipantsNameView.h"
+#include "SphereNameView.h"
 
 class ofApp : public ofBaseApp {
 
@@ -26,7 +27,7 @@ class ofApp : public ofBaseApp {
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
-		int sceneIndex = 0;
+		int sceneIndex = 4;
 		vector <BaseView*> views;
 
 		float windowWidth;
