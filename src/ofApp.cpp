@@ -30,11 +30,13 @@ void ofApp::setup(){
     BaseView* faceSingleGlitchView = new FaceSingleGlitchView();
     BaseView* faceGridNormalView = new FaceGridNormalView();
     BaseView* participantsNameView = new ParticipantsNameView();
+    BaseView* sphereNameView = new SphereNameView();
 
     views.push_back(faceSingleGlitchView);
     views.push_back(participantsNameView);
     views.push_back(faceGridNormalView);
     views.push_back(participantsNameView);
+    views.push_back(sphereNameView);
 
     for (int i = 0; i < views.size(); i++) {
         views[i]->setImgPtr(imageFacesData, faceDataMaxSize);
@@ -42,14 +44,14 @@ void ofApp::setup(){
     }
 
     ofBackground(0);
-    ofHideCursor();
+    // ofHideCursor();
     ofSetVerticalSync(true);
     ofSetFrameRate(0);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    timer(ofGetElapsedTimef());
+    // timer(ofGetElapsedTimef());
     views[sceneIndex]->update();
 }
 
