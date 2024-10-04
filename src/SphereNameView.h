@@ -3,13 +3,19 @@
 #include "ofxShuffleText.h"
 #include "ofApp.h"
 
+// 球体半径 密集度
+static float GLOBALRADIUS = 100;
+
 class ArtistName {
 private:
-	string name;
 	float x;
 	float y;
 	float z;
 	float radius;
+	float speed;
+	int col = 0;
+	int plusMinus = 1;
+	string name;
 	ofTrueTypeFont font;
 
 public:
@@ -17,26 +23,42 @@ public:
 		font.load("font/OCRB.TTF", 18);
 		x = ofRandom(50, 100);
 		y = ofRandom(50, 100);
-		radius = ofRandom(50, 200);
+		col = ofRandom(0, 255);
+		radius = ofRandom(50, 1000);
+		speed = ofRandom(0.1, 1);
 		name = artistName;
 	}
 
 	void update() {
+		col += plusMinus;
 
+		if (plusMinus > 255 || plusMinus < 0) {
+			plusMinus *= -1;
+		}
 	}
 
 	void dispName() {
 		ofPushMatrix();
 		ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2, 0); // 文字の位置を画面の中央に設定し、Z=100に移動
-		ofRotateY(ofGetElapsedTimef() * y); // Y軸を中心に回転（毎秒50度回転）
-		ofRotateX(ofGetElapsedTimef() * x);
-		// ofDrawAxis(200); // 軸のサイズを設定
+		ofRotateY(ofGetElapsedTimef() * y * speed * -1); // Y軸を中心に回転（毎秒50度回転）
+		ofRotateX(ofGetElapsedTimef() * x * speed * -1);
+		// ofDrawAxis(200); // 軸を描画
 
 		// 文字を描画
-		ofTranslate(0, 0,radius); // 文字の位置を画面の中央に設定し、Z=100に移動
-		// ofDrawAxis(200); // 軸のサイズを設定
+		int shrink = GLOBALRADIUS;
+		/*
+		if (shrink > radius) {
+			shrink = radius;
+		}
+		if (shrink < 0) {
+			shrink = 0;
+		}
+		*/
+		ofTranslate(0, 0, GLOBALRADIUS); //radius - GLOBALRADIUS); // 文字の位置を画面の中央に設定, z軸を移動
+		// ofDrawAxis(200); // 軸を描画
 
-		ofSetColor(255); // 文字の色を白に設定
+		// ofSetColor(255); // 文字の色を白に設定
+		ofSetColor(col);
 		font.drawString(name, 0, 0); // 文字を描画
 		// ofRect(0, 0, 100, 100);
 		ofPopMatrix();
@@ -45,25 +67,16 @@ public:
 
 class SphereNameView : public BaseView {
 private:
-	bool bAfterStarted;
 	float windowWidth;
 	float windowHeight;
-
-	ofFbo fbo;
 
 	float fLineHeight;
 	int currentNameTextSize;
 	static const int locationSize = 5;
-	static const int nameTextRange = 28;
-	int locationCounter = 0;
-	int participantCounter = 0;
 
-	ofTrueTypeFont font;
 	string textFiles[locationSize];
-	string locations[locationSize];
 	vector <string> participants[locationSize];
-	ofxShuffleText shuffleParticipants[nameTextRange];
-	ofxShuffleText shuffleLocation;
+
 
 	float zAxis = 0;
 	float xAxis = 60;
@@ -80,24 +93,13 @@ public:
 		windowWidth = _windowWidth;
 		windowHeight = _windowHeight;
 
-		for (int i = 0; i < TestNameNum; i++) {
-			ArtistName setName;
-			setName.setup("SHIBAYAMA TAKURO");
-
-			names.push_back(setName);
-		}
-
 		textFiles[0] = "Tokyo College of Music";
-		locations[0] = "- Tokyo College of Music";
 		textFiles[1] = "Tokyo Denki University";
-		locations[1] = "- Tokyo Denki University";
 		textFiles[2] = "BankART Station";
-		locations[2] = "- BankART Station";
 		textFiles[3] = "Goethe-Institut Tokyo";
-		locations[3] = "- Goethe-Institut Tokyo";
 		textFiles[4] = "ZKM";
-		locations[4] = "- ZKM [Germany}";
 
+		// txtファイルから名前読み込み
 		for (int i = 0; i < locationSize; i++) {
 			ofBuffer buffer = ofBufferFromFile("text/" + textFiles[i] + ".txt");
 			if (buffer.size()) {
@@ -111,51 +113,29 @@ public:
 			}
 		}
 
-		font.load("font/OCRB.TTF", 18);
-		fLineHeight = font.getLineHeight();
+		// 初期化
+		for (int i = 0; i < locationSize; i++) {
+			int locationArtistSize = participants[i].size();
+			for (int j = 0; j < locationArtistSize; j++) {
+				ArtistName setName;
+				setName.setup(participants[i][j]);
 
-		shuffleLocation.setup(font, locations[locationCounter]);
-		shuffleLocation.setRandomChars(OFX_SHUFFLE_TEXT_NUMBERS | OFX_SHUFFLE_TEXT_UPPER_LETTERS | OFX_SHUFFLE_TEXT_LOWER_LETTERS | OFX_SHUFFLE_TEXT_SYMBOLS);
-
-		for (int i = 0; i < nameTextRange; i++) {
-			shuffleParticipants[i].setup(font, "");
-			shuffleParticipants[i].setRandomChars(OFX_SHUFFLE_TEXT_NUMBERS | OFX_SHUFFLE_TEXT_UPPER_LETTERS | OFX_SHUFFLE_TEXT_LOWER_LETTERS | OFX_SHUFFLE_TEXT_SYMBOLS);
+				names.push_back(setName);
+			}
 		}
 
-		fbo.allocate(windowWidth, windowHeight, GL_RGB);
+		ofLog() << "ARTIST NUMBERS " << names.size();
 	}
 
 	void update() {
-		moveAxis += 1;
+		GLOBALRADIUS = GLOBALRADIUS + 7 * k;
 
-		if (moveAxis > 360) {
-			moveAxis = 0;
-		}
-
-		TestZ = TestZ + 10 * k;
-
-		if (TestZ > 1000 || TestZ < -1000) {
+		if (GLOBALRADIUS > 1000 || GLOBALRADIUS < -1000) {
 			k *= -1;
 		}
 	}
 
 	void draw() {
-		/*
-		ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2, 0); // 文字の位置を画面の中央に設定し、Z=100に移動
-		ofRotateY(ofGetElapsedTimef() * 50); // Y軸を中心に回転（毎秒50度回転）
-		ofRotateX(ofGetElapsedTimef() * 50);
-		ofDrawAxis(200); // 軸のサイズを設定
-
-		// 文字を描画
-		ofPushMatrix();
-		ofTranslate(0, 0, 300); // 文字の位置を画面の中央に設定し、Z=100に移動
-		ofDrawAxis(200); // 軸のサイズを設定
-
-		ofSetColor(255); // 文字の色を白に設定
-		font.drawString("Hello", 0, 0); // 文字を描画
-		ofPopMatrix();
-		*/
-
 		for (int i = 0; i < TestNameNum; i++) {
 			names[i].dispName();
 		}
