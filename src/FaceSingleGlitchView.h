@@ -78,8 +78,10 @@ public:
 
     void draw() {
         ofPushMatrix();
+#ifdef TARGET_LINUX_ARM
         ofTranslate(windowHeight, 0);
         ofRotate(90);
+#endif
         fbo.draw(windowWidth * 0.5, 0, windowHeight, windowHeight);
         ofPopMatrix();
     }

@@ -13,16 +13,12 @@ private:
     ofImage* imageFacesPtr;
     int imageMaxSize;
     int randomIndex = 0;
-    float rowHeight = 2.0;
     int center;
 
     // ‰ð‘œ“x
-    float dotSize = 25;
+    float dotSize = 18;
 
-    int imageWidth;
-    int imageHeight;
-    static const int maxImageSize = 159;
-    ofPixels imageFacesPixel[maxImageSize];
+    vector <ofPixels> imageFacesPixel;
 
 public:
     void setImgPtr(ofImage* ptr, const int size) {
@@ -39,13 +35,12 @@ public:
         windowWidth = _windowWidth;
         windowHeight = _windowHeight;
         center = (windowWidth / 2) - (imageFacesPtr[0].getWidth() / 2);
-        fbo.allocate(imageFacesPtr[0].getWidth(), imageFacesPtr[0].getHeight(), GL_RGB, 24);
+        fbo.allocate(imageFacesPtr[0].getWidth(), imageFacesPtr[0].getHeight(), GL_RGB);
         fbo.setAnchorPoint(windowHeight * 0.5, 0);
 
-        imageWidth = imageFacesPtr[0].getWidth();
-        imageHeight = imageFacesPtr[0].getHeight();
-        for (int i = 0; i < maxImageSize; i++) {
-            imageFacesPixel[i] = imageFacesPtr[i].getPixels();
+        for (int i = 0; i < imageMaxSize; i++) {
+            ofPixels tpmPixels = imageFacesPtr[i].getPixels();
+            imageFacesPixel.push_back(tpmPixels);
         }
 
         ofSetCircleResolution(60);
@@ -65,13 +60,17 @@ public:
 
     void draw() {
         ofPushMatrix();
+#ifdef TARGET_LINUX_ARM
+        ofTranslate(windowHeight, 0);
+        ofRotate(90);
+#endif
         fbo.draw(windowWidth * 0.5, 0, windowHeight, windowHeight);
         ofPopMatrix();
     }
 
     void dispPixel() {
-        for (int h = 0; h < imageHeight; h += dotSize) {
-            for (int w = 0; w < imageWidth; w += dotSize) {
+        for (int h = 0; h < imageFacesPtr[randomIndex].getHeight(); h += dotSize) {
+            for (int w = 0; w < imageFacesPtr[randomIndex].getWidth(); w += dotSize) {
                 // ‚»‚ÌÀ•W‚Ì–¾‚é‚³‚ðŽæ“¾
                 ofColor col = imageFacesPixel[randomIndex].getColor(w, h);
                 float monoColor = col.getBrightness();
