@@ -4,6 +4,7 @@
 #include "FaceSingleGlitchView.h"
 #include "FaceGridNormalView.h"
 #include "ParticipantsNameView.h"
+#include "FaceRectDotView.h"
 
 class ofApp : public ofBaseApp {
 

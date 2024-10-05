@@ -184,6 +184,7 @@
     <ClCompile Include="src\ofApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\FaceRectDotView.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\BaseView.h" />
     <ClInclude Include="src\FaceGridNormalView.h" />
