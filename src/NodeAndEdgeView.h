@@ -5,7 +5,6 @@
 
 class NodeAndEdgeView : public BaseView {
 private:
-	bool bAfterStarted;
 	float windowWidth;
 	float windowHeight;
 
@@ -87,13 +86,8 @@ public:
 	}
 
 
-	void start() {
-		
-		bAfterStarted = true;
-	}
+	void start() {}
 
-	void stop() {
-		
-	}
+	void stop() {}
 
 };

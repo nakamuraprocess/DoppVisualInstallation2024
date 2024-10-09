@@ -4,7 +4,6 @@
 
 class ParticipantsNameView : public BaseView {
 private:
-	bool bAfterStarted;
 	float windowWidth;
 	float windowHeight;
 
@@ -129,24 +128,17 @@ public:
 			float delay = 50.0 * (i + 1);
 			shuffleParticipants[i].start(1.0, delay, false, 10);
 		}
-
-		bAfterStarted = true;
 	}
 
 	void stop() {
-		if (bAfterStarted) {
-			bAfterStarted = false;
-			participantCounter++;
-
-			if ((int)participants[locationCounter].size() <= participantCounter * nameTextRange) {
-				participantCounter = 0;
-				locationCounter++;
-				if (locationCounter >= locationSize) {
-					locationCounter = 0;
-				}
+		participantCounter++;
+		if ((int)participants[locationCounter].size() <= participantCounter * nameTextRange) {
+			participantCounter = 0;
+			locationCounter++;
+			if (locationCounter >= locationSize) {
+				locationCounter = 0;
 			}
-		}
-		
+		}		
 	}
 
 };

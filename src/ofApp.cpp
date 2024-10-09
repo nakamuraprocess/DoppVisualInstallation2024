@@ -15,11 +15,6 @@ void ofApp::setup(){
         string faceDataPath = "images/face_" + ofToString(i) + ".jpg";
         if (imageFacesData[i].load(faceDataPath)) {
             imageFacesData[i].setImageType(OF_IMAGE_COLOR);
-            /*cout << faceDataPath
-            << " x: " << imageFacesData[i].getWidth()
-            << " y: " << imageFacesData[i].getHeight()
-            << " c: " << imageFacesData[i].getPixels().getNumChannels()
-            << endl;*/
         }
         else {
             cout << "Failed to load image: " << faceDataPath;
@@ -52,7 +47,7 @@ void ofApp::setup(){
         sceneIndexList.insert(sceneIndexList.begin() + i, 0);
     }
 
-    sceneIndex = sceneIndexList[0];
+    sceneIndex = sceneIndexList[sceneIndexCounter];
 
 
     // Init Display config
@@ -79,17 +74,12 @@ void ofApp::timer(float now) {
     float timer = now - timerLapTime;
     if (timer >= timerSleepTime) {
         timerLapTime = now;
+        int sceneIndexPrev = sceneIndexList[sceneIndexCounter];
+        views[sceneIndexPrev]->stop();
         sceneIndexCounter++;
         sceneIndexCounter %= sceneIndexList.size();
         sceneIndex = sceneIndexList[sceneIndexCounter];
-        for (int i = 0; i < viewMaxSize; i++) {
-            if (sceneIndex == i) {
-                views[sceneIndex]->start();
-            }
-            else {
-                views[i]->stop();
-            }
-        }
+        views[sceneIndex]->start();
     }
 }
 

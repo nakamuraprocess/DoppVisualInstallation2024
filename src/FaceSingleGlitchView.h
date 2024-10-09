@@ -3,7 +3,6 @@
 
 class FaceSingleGlitchView : public BaseView {
 private:
-    bool bAfterStarted;
     float windowWidth;
     float windowHeight;
 
@@ -114,17 +113,8 @@ public:
         }
     }
 
-    void start() {
-        // Do something
+    void start() {}
 
-        bAfterStarted = true;
-    }
+    void stop() {}
 
-    void stop() {
-        if (bAfterStarted) {
-            bAfterStarted = false;
-        }
-        // Do something
-
-    }
 };
