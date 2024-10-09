@@ -51,7 +51,7 @@ public:
 		}
 	}
 
-	void update() {
+	void update(float now) {
 		for (int j = 0; j < h_blocks; j++) {
 			for (int i = 0; i < w_blocks; i++) {
 				imgGridIdx[j][i] = ofRandom(0, imageMaxSize - 1);

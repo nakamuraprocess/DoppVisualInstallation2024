@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseView.h"
-#include "ofApp.h"
 
 class FaceSingleGlitchView : public BaseView {
 private:
@@ -41,7 +40,7 @@ public:
         fbo.setAnchorPoint(windowHeight* 0.5, 0);
     }
 
-    void update() {
+    void update(float now) {
         randomIndex = ofRandom(0, imageMaxSize - 1);
         
         // インターバルの時

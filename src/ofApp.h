@@ -1,10 +1,13 @@
 #pragma once
 
+#include <random>
+
 #include "ofMain.h"
 #include "FaceSingleGlitchView.h"
 #include "FaceGridNormalView.h"
 #include "ParticipantsNameView.h"
 #include "FaceRectDotView.h"
+#include "NodeAndEdgeView.h"
 
 class ofApp : public ofBaseApp {
 
@@ -15,6 +18,7 @@ class ofApp : public ofBaseApp {
 		void draw();
 
 		void timer(float now);
+
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -27,8 +31,13 @@ class ofApp : public ofBaseApp {
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
+		
+		static const int viewMaxSize = 5;
+		BaseView* views[viewMaxSize];
+
 		int sceneIndex = 0;
-		vector <BaseView*> views;
+		int sceneIndexCounter = 0;
+		vector <int> sceneIndexList;
 
 		float windowWidth;
 		float windowHeight;

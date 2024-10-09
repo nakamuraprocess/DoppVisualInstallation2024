@@ -66,7 +66,7 @@ public:
 		fbo.allocate(windowWidth, windowHeight, GL_RGB);
 	}
 
-	void update() {
+	void update(float now) {
 		shuffleLocation.update();
 		for (int i = 0; i < nameTextRange; i++) {
 			shuffleParticipants[i].update();

@@ -7,7 +7,7 @@ public:
 
 	virtual void setup(float _windowWidth, float _windowHeight) {}
 
-	virtual void update() {}
+	virtual void update(float now) {}
 
 	virtual void draw() {}
 

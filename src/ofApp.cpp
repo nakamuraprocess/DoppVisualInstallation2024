@@ -27,24 +27,36 @@ void ofApp::setup(){
     }
 
     // Init Scenes
-    BaseView* faceSingleGlitchView = new FaceSingleGlitchView();
-    BaseView* faceGridNormalView = new FaceGridNormalView();
-    BaseView* participantsNameView = new ParticipantsNameView();
-    BaseView* faceRectDotView = new FaceRectDotView();
-
-    views.push_back(faceSingleGlitchView);
-    views.push_back(participantsNameView);
-    views.push_back(faceGridNormalView);
-    views.push_back(participantsNameView);
-    views.push_back(faceRectDotView);
-    views.push_back(participantsNameView);
-
-    for (int i = 0; i < views.size(); i++) {
+    views[0] = new ParticipantsNameView();
+    views[1] = new FaceSingleGlitchView();
+    views[2] = new FaceGridNormalView();
+    views[3] = new FaceRectDotView();
+    views[4] = new NodeAndEdgeView();
+ 
+    for (int i = 0; i < viewMaxSize; i++) {
         views[i]->setImgPtr(imageFacesData, faceDataMaxSize);
         views[i]->setup(windowWidth, windowHeight);
     }
 
-    ofBackground(0);
+
+    // Init Scene Index
+    for (int i = 1; i < viewMaxSize; i++) {
+        sceneIndexList.push_back(i);
+    }
+
+    random_device seed_gen;
+    mt19937 engine(seed_gen());
+    std::shuffle(sceneIndexList.begin(), sceneIndexList.end(), engine);
+
+    for (int i = 1; i < viewMaxSize + 3; i += 2) {
+        sceneIndexList.insert(sceneIndexList.begin() + i, 0);
+    }
+
+    sceneIndex = sceneIndexList[0];
+
+
+    // Init Display config
+    ofBackground(255);
     ofHideCursor();
     ofSetVerticalSync(true);
     ofSetFrameRate(0);
@@ -52,8 +64,9 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    timer(ofGetElapsedTimef());
-    views[sceneIndex]->update();
+    float now = ofGetElapsedTimef();
+    timer(now);
+    views[sceneIndex]->update(now);
 }
 
 //--------------------------------------------------------------
@@ -66,9 +79,10 @@ void ofApp::timer(float now) {
     float timer = now - timerLapTime;
     if (timer >= timerSleepTime) {
         timerLapTime = now;
-        sceneIndex++;
-        sceneIndex %= (int)views.size();
-        for (int i = 0; i < views.size(); i++) {
+        sceneIndexCounter++;
+        sceneIndexCounter %= sceneIndexList.size();
+        sceneIndex = sceneIndexList[sceneIndexCounter];
+        for (int i = 0; i < viewMaxSize; i++) {
             if (sceneIndex == i) {
                 views[sceneIndex]->start();
             }
@@ -78,7 +92,6 @@ void ofApp::timer(float now) {
         }
     }
 }
-
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){

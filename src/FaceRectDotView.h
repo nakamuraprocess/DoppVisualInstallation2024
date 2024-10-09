@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseView.h"
-#include "ofApp.h"
 
 class FaceRectDotView : public BaseView {
 private:
@@ -16,7 +15,7 @@ private:
     int center;
 
     // ‰ð‘œ“x
-    float dotSize = 18;
+    float dotSize = 11;
 
     vector <ofPixels> imageFacesPixel;
 
@@ -46,7 +45,7 @@ public:
         ofSetCircleResolution(60);
     }
 
-    void update() {
+    void update(float now) {
         randomIndex = ofRandom(0, imageMaxSize - 1);
 
         fbo.begin();
