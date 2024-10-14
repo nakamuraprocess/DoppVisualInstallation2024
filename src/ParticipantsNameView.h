@@ -37,7 +37,7 @@ public:
 		textFiles[3] = "Goethe-Institut Tokyo";
 		locations[3] = "- Goethe-Institut Tokyo";
 		textFiles[4] = "ZKM";
-		locations[4] = "- ZKM [Germany}";
+		locations[4] = "- ZKM [Germany]";
 
 		for (int i = 0; i < locationSize; i++) {
 			ofBuffer buffer = ofBufferFromFile("text/"+ textFiles[i] + ".txt");
@@ -75,14 +75,12 @@ public:
 		ofClear(0);
 		ofPushMatrix();
 		ofPushStyle();
-
 		ofSetColor(255);
 		shuffleLocation.draw(20, 34);;
 		for (int i = 0; i < nameTextRange; i++) {
 			float height = fLineHeight * (i + 1);
 			shuffleParticipants[i].draw(20, height + 34);
 		}
-
 		ofPopStyle();
 		ofPopMatrix();
 		fbo.end();

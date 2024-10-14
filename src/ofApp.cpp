@@ -33,11 +33,11 @@ void ofApp::setup(){
         views[i]->setup(windowWidth, windowHeight);
     }
 
-
     // Init Scene Index
-    for (int i = 1; i < viewMaxSize; i++) {
-        sceneIndexList.push_back(i);
-    }
+    sceneIndexList.push_back(1);
+    sceneIndexList.push_back(2);
+    sceneIndexList.push_back(3);
+    sceneIndexList.push_back(4);
 
     random_device seed_gen;
     mt19937 engine(seed_gen());
@@ -50,7 +50,7 @@ void ofApp::setup(){
     sceneIndex = sceneIndexList[sceneIndexCounter];
 
 
-    // Init Display config
+    // Display settings
     ofBackground(255);
     ofHideCursor();
     ofSetVerticalSync(true);
