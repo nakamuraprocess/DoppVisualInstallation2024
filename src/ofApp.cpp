@@ -61,15 +61,13 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     float now = ofGetElapsedTimef();
-    // timer(now);
-    // views[sceneIndex]->update(now);
-    views[5]->update(now);
+    timer(now);
+    views[sceneIndex]->update(now);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    // views[sceneIndex]->draw();
-    views[5]->draw();
+    views[sceneIndex]->draw();
 }
 
 //--------------------------------------------------------------

@@ -5,7 +5,7 @@
 #include <cmath>
 
 // ãÖëÃîºåa ñßèWìx
-static float GLOBALRADIUS = 100;
+static float GLOBALRADIUS = 250;
 
 class ArtistName {
 private:
@@ -14,10 +14,15 @@ private:
 	float x;
 	float y;
 	float z;
-	float radius;
+	float moveX;
+	float moveY;
 	float speed;
-	int col = 0;
-	int plusMinus = 1;
+	float moveAngle;
+	float moveRange;
+	int col;
+	int isMoveX;
+	int plusMinus;
+	float rotateZ;
 	string name;
 	ofTrueTypeFont font;
 
@@ -25,48 +30,55 @@ public:
 	void setup(string artistName) {
 		font.load("font/OCRB.TTF", 10);
 		angle = ofRandom(0, 2 * PI);
-		r = ofRandom(0, GLOBALRADIUS);
+		r = ofRandom(5, GLOBALRADIUS);
 		x = cos(angle) * r;
+		moveX = x;
 		y = sin(angle) * r;
-		z = 0; //-1 * ofRandom(0, 100);
-		col = ofRandom(0, 255);
-		radius = ofRandom(50, 1000);
-		speed = ofRandom(0.1, 1);
+		moveY = y;
+		z = -1 * ofRandom(100, 400);
+		col = ofMap(z, -100, -400, 255, 50);
+		speed = ofRandom(0.05, 0.1);
 		name = artistName;
+		moveAngle = ofRandom(0, 360);
+		// íÜêSÇ…ãﬂÇ¢ÇŸÇ«ëÂÇ´Ç≠â^ìÆÇ∑ÇÈ
+		moveRange = ofRandom(5, ofMap(r, 5, GLOBALRADIUS, 40, 10));
+		isMoveX = (ofRandom(0, 1) < 0.5) ? 0 : 1;
+		plusMinus = (ofRandom(0, 1) < 0.5) ? -1 : 1;
+		rotateZ = ofRandom(-15, 15);
 	}
 
 	void update() {
-		col += plusMinus;
-
-		if (plusMinus > 255 || plusMinus < 0) {
-			plusMinus *= -1;
+		/*
+		if (isMoveX) {
+			moveX = sin(moveAngle) * moveRange * plusMinus;
 		}
+		else {
+			moveY = cos(moveAngle) * moveRange* plusMinus;
+		}
+		*/
+		moveX = sin(moveAngle) * moveRange;
+		moveY = cos(moveAngle) * moveRange;
+
+		moveAngle += speed * plusMinus;
 	}
 
 	// é¸ä˙â^ìÆ
 	void dispName() {
 		ofPushMatrix();
 		ofTranslate(ofGetWidth() / 2 + x, ofGetHeight() / 2 + y, z);
-		// ofRotateY(ofGetElapsedTimef() * y * speed * -1); // Yé≤ÇíÜêSÇ…âÒì]Åiñàïb50ìxâÒì]Åj
-		// ofRotateX(ofGetElapsedTimef() * x * speed * -1);
 		// ofDrawAxis(200); // é≤Çï`âÊ
+
+		// âÒì]
+		ofRotateZ(rotateZ);
+		// âÒì]ÇµÇΩé≤ÇäÓèÄÇ…â^ìÆ
+		ofTranslate(moveX, moveY);
+		// ofDrawAxis(200);
 
 		// ï∂éöÇï`âÊ
 		int shrink = GLOBALRADIUS;
-		/*
-		if (shrink > radius) {
-			shrink = radius;
-		}
-		if (shrink < 0) {
-			shrink = 0;
-		}
-		*/
-		ofTranslate(0, 0, GLOBALRADIUS); //radius - GLOBALRADIUS); // ï∂éöÇÃà íuÇâÊñ ÇÃíÜâõÇ…ê›íË, zé≤Çà⁄ìÆ
-		// ofDrawAxis(200); // é≤Çï`âÊ
 
-		// ofSetColor(255); // ï∂éöÇÃêFÇîíÇ…ê›íË
 		ofSetColor(col);
-		font.drawString(name, 0, 0); // ï∂éöÇï`âÊ
+		font.drawString(name, -font.stringWidth(name) / 2, 0); // ï∂éöÇï`âÊ
 		// ofRect(0, 0, 100, 100);
 		ofPopMatrix();
 	}
@@ -138,8 +150,11 @@ public:
 	}
 
 	void draw() {
+		ofBackground(0);
+
 		for (int i = 0; i < TestNameNum; i++) {
 			names[i].dispName();
+			names[i].update();
 		}
 	}
 
@@ -148,5 +163,7 @@ public:
 	}
 
 	void stop() {
+		// ofLog() << "RESET";
+		ofSetColor(255);
 	}
 };
