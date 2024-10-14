@@ -27,6 +27,7 @@ void ofApp::setup(){
     views[2] = new FaceGridNormalView();
     views[3] = new FaceRectDotView();
     views[4] = new NodeAndEdgeView();
+    views[5] = new FaceSoaringView();
  
     for (int i = 0; i < viewMaxSize; i++) {
         views[i]->setImgPtr(imageFacesData, faceDataMaxSize);

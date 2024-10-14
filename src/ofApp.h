@@ -8,6 +8,7 @@
 #include "ParticipantsNameView.h"
 #include "FaceRectDotView.h"
 #include "NodeAndEdgeView.h"
+#include "FaceSoaringView.h"
 
 class ofApp : public ofBaseApp {
 
@@ -32,7 +33,7 @@ class ofApp : public ofBaseApp {
 		void gotMessage(ofMessage msg);
 		
 		
-		static const int viewMaxSize = 5;
+		static const int viewMaxSize = 6;
 		BaseView* views[viewMaxSize];
 
 		int sceneIndex = 0;

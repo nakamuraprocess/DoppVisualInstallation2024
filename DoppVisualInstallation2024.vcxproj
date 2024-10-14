@@ -185,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\FaceRectDotView.h" />
+    <ClInclude Include="src\FaceSoaringView.h" />
     <ClInclude Include="src\NodeAndEdgeView.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\BaseView.h" />
