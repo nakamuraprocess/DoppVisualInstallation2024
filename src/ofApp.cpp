@@ -27,6 +27,7 @@ void ofApp::setup(){
     views[2] = new FaceGridNormalView();
     views[3] = new FaceRectDotView();
     views[4] = new NodeAndEdgeView();
+    views[5] = new SphereName2dView();
  
     for (int i = 0; i < viewMaxSize; i++) {
         views[i]->setImgPtr(imageFacesData, faceDataMaxSize);
@@ -60,13 +61,15 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     float now = ofGetElapsedTimef();
-    timer(now);
-    views[sceneIndex]->update(now);
+    // timer(now);
+    // views[sceneIndex]->update(now);
+    views[5]->update(now);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    views[sceneIndex]->draw();
+    // views[sceneIndex]->draw();
+    views[5]->draw();
 }
 
 //--------------------------------------------------------------
