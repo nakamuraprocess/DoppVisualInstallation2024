@@ -77,8 +77,10 @@ public:
 		// •¶Žš‚ð•`‰æ
 		int shrink = GLOBALRADIUS;
 
+		ofPushStyle();
 		ofSetColor(col);
 		font.drawString(name, -font.stringWidth(name) / 2, 0); // •¶Žš‚ð•`‰æ
+		ofPopStyle();
 		// ofRect(0, 0, 100, 100);
 		ofPopMatrix();
 	}
@@ -164,6 +166,6 @@ public:
 
 	void stop() {
 		// ofLog() << "RESET";
-		ofSetColor(255);
+		// ofSetColor(255);
 	}
 };
