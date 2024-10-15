@@ -60,7 +60,7 @@ public:
 			float r = 0;
 			float g = 155;
 			float b = 214;
-			float a = ofClamp(point[j].z, 100, 200);
+			float a = ofClamp(point[j].z, 60, 200);
 			ofSetColor(r, g, b, a);
 			for (int k = j + 1; k < pointMaxSize; k++) {
 				if (ofDist(point[j].x, point[j].y, point[j].z, point[k].x, point[k].y, point[k].z) < distance) {
