@@ -52,8 +52,10 @@ public:
 		ofPushStyle();
 		ofFill();
 		ofSetColor(0, 155, 214, 25);
+		ofSetCircleResolution(100);
 		ofDrawCircle(0, 0, radiusLargeCircle);
 		
+		ofSetCircleResolution(10);
 		for (int j = 0; j < pointMaxSize; j++) {
 			float r = 0;
 			float g = 155;
@@ -65,10 +67,12 @@ public:
 					ofDrawLine(point[j], point[k]);
 				}
 			}
+			
 			ofDrawCircle(point[j], 2);
 		}
 		ofNoFill();
 		ofSetColor(0, 155, 214, 135);
+		ofSetCircleResolution(100);
 		ofDrawCircle(0, 0, radiusLargeCircle);
 
 		ofPopStyle();
