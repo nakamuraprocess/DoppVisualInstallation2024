@@ -1,6 +1,4 @@
 #pragma once
-
-#pragma once
 #include "BaseView.h"
 
 class NodeAndEdgeView : public BaseView {
@@ -19,6 +17,8 @@ private:
 	ofPoint point[pointMaxSize];
 	float timeRecently = 0.0;
 
+	ofImage imageTitle;
+
 
 public:
 	void setup(float _windowWidth, float _windowHeight) {
@@ -28,6 +28,8 @@ public:
 		for (int i = 0; i < pointMaxSize; i++) {
 			posInitial[i] = glm::vec3(ofRandom(0, radius * 2), ofRandom(0, radius * 2), ofRandom(0, radius * 2));
 		}
+
+		imageTitle.load("logo/title.png");
 	}
 
 
@@ -49,13 +51,13 @@ public:
 		ofTranslate(windowWidth * 0.5, windowHeight * 0.5);
 		ofPushStyle();
 		ofFill();
-		ofSetColor(105, 175, 255, 25);
+		ofSetColor(0, 155, 214, 25);
 		ofDrawCircle(0, 0, radiusLargeCircle);
 		
 		for (int j = 0; j < pointMaxSize; j++) {
-			float r = 105;
-			float g = 175;
-			float b = 255;
+			float r = 0;
+			float g = 155;
+			float b = 214;
 			float a = ofClamp(point[j].z, 5, 200);
 			ofSetColor(r, g, b, a);
 			for (int k = j + 1; k < pointMaxSize; k++) {
@@ -66,11 +68,12 @@ public:
 			ofDrawCircle(point[j], 2);
 		}
 		ofNoFill();
-		ofSetColor(105, 175, 255, 135);
+		ofSetColor(0, 155, 214, 135);
 		ofDrawCircle(0, 0, radiusLargeCircle);
 
 		ofPopStyle();
 		ofPopMatrix();
+		imageTitle.draw(0, windowHeight - (imageTitle.getHeight() * 0.5), imageTitle.getWidth() * 0.5, imageTitle.getHeight() * 0.5);
 		fbo.end();
 	}
 

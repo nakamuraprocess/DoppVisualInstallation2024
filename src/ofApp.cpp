@@ -25,9 +25,8 @@ void ofApp::setup(){
     views[0] = new ParticipantsNameView();
     views[1] = new FaceSingleGlitchView();
     views[2] = new FaceGridNormalView();
-    views[3] = new FaceRectDotView();
-    views[4] = new NodeAndEdgeView();
-    views[5] = new SphereName2dView();
+    views[3] = new NodeAndEdgeView();
+    views[4] = new SphereName2dView();
  
     for (int i = 0; i < viewMaxSize; i++) {
         views[i]->setImgPtr(imageFacesData, faceDataMaxSize);
@@ -44,10 +43,9 @@ void ofApp::setup(){
     mt19937 engine(seed_gen());
     std::shuffle(sceneIndexList.begin(), sceneIndexList.end(), engine);
 
-    for (int i = 1; i < viewMaxSize + 3; i += 2) {
+    for (int i = 1; i < viewMaxSize + (viewMaxSize - 2); i += 2) {
         sceneIndexList.insert(sceneIndexList.begin() + i, 0);
     }
-
     sceneIndex = sceneIndexList[sceneIndexCounter];
 
 

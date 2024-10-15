@@ -49,6 +49,33 @@ public:
 					}
 				}
 			}
+
+			if (textFiles[i] == "Goethe-Institut Tokyo") {
+				ofBuffer buffer = ofBufferFromFile("text/Festival Futura.txt");
+				participants[i].push_back(" ");
+				participants[i].push_back("- Festival Futura [France]");
+				if (buffer.size()) {
+					for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
+						string line = *it;
+						if (line.empty() == false) {
+							participants[i].push_back(line);
+						}
+					}
+				}
+			}
+			else if (textFiles[i] == "ZKM") {
+				ofBuffer buffer = ofBufferFromFile("text/Scenkonst Museet.txt");
+				participants[i].push_back(" ");
+				participants[i].push_back("- Scenkonst Museet [Sweeden]");
+				if (buffer.size()) {
+					for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
+						string line = *it;
+						if (line.empty() == false) {
+							participants[i].push_back(line);
+						}
+					}
+				}
+			}
 		}
 
 		font.load("font/OCRB.TTF", 18);

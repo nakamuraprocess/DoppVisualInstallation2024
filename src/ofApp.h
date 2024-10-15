@@ -6,7 +6,6 @@
 #include "FaceSingleGlitchView.h"
 #include "FaceGridNormalView.h"
 #include "ParticipantsNameView.h"
-#include "FaceRectDotView.h"
 #include "NodeAndEdgeView.h"
 #include "SphereName2dView.h"
 
@@ -33,7 +32,7 @@ class ofApp : public ofBaseApp {
 		void gotMessage(ofMessage msg);
 		
 		
-		static const int viewMaxSize = 6;
+		static const int viewMaxSize = 5;
 		BaseView* views[viewMaxSize];
 
 		int sceneIndex = 0;

@@ -1,88 +1,42 @@
 #pragma once
 #include "BaseView.h"
-#include "ofxShuffleText.h"
-#include "ofApp.h"
-#include <cmath>
-
-// ãÖëÃîºåa ñßèWìx
-static float GLOBALRADIUS = 250;
 
 class ArtistName {
-private:
+
+public:
+	string name;
 	float angle;
-	float r;
-	float x;
-	float y;
-	float z;
+	float radiusX;
+	float radiusY;
+	float posX;
+	float posY;
 	float moveX;
 	float moveY;
 	float speed;
 	float moveAngle;
-	float moveRange;
-	int col;
-	int isMoveX;
+	float moveRangeX;
+	float moveRangeY;
+	int alpha;
 	int plusMinus;
-	float rotateZ;
-	string name;
-	ofTrueTypeFont font;
 
-public:
-	void setup(string artistName) {
-		font.load("font/OCRB.TTF", 10);
-		angle = ofRandom(0, 2 * PI);
-		r = ofRandom(5, GLOBALRADIUS);
-		x = cos(angle) * r;
-		moveX = x;
-		y = sin(angle) * r;
-		moveY = y;
-		z = -1 * ofRandom(100, 400);
-		col = ofMap(z, -100, -400, 255, 50);
-		speed = ofRandom(0.05, 0.1);
+	void setName(string artistName) {
 		name = artistName;
+	}
+	
+	void setup(int counter, int size) {
+		angle = ofMap(counter, 0.0, (float)size, 0.0, TWO_PI);
+		radiusX = ofRandom(50, 240);
+		radiusY = ofMap(radiusX, 50, 240, 120, 500);
+		posX = cos(angle) * radiusX;
+		posY = sin(angle) * radiusY;
+		moveX = posX;
+		moveY = posY;
 		moveAngle = ofRandom(0, 360);
-		// íÜêSÇ…ãﬂÇ¢ÇŸÇ«ëÂÇ´Ç≠â^ìÆÇ∑ÇÈ
-		moveRange = ofRandom(5, ofMap(r, 5, GLOBALRADIUS, 40, 10));
-		isMoveX = (ofRandom(0, 1) < 0.5) ? 0 : 1;
+		moveRangeX = 16;
+		moveRangeY = 7;
+		alpha = ofRandom(220, 255);
+		speed = ofRandom(0.01, 0.04);
 		plusMinus = (ofRandom(0, 1) < 0.5) ? -1 : 1;
-		rotateZ = ofRandom(-15, 15);
-	}
-
-	void update() {
-		/*
-		if (isMoveX) {
-			moveX = sin(moveAngle) * moveRange * plusMinus;
-		}
-		else {
-			moveY = cos(moveAngle) * moveRange* plusMinus;
-		}
-		*/
-		moveX = sin(moveAngle) * moveRange;
-		moveY = cos(moveAngle) * moveRange;
-
-		moveAngle += speed * plusMinus;
-	}
-
-	// é¸ä˙â^ìÆ
-	void dispName() {
-		ofPushMatrix();
-		ofTranslate(ofGetWidth() / 2 + x, ofGetHeight() / 2 + y, z);
-		// ofDrawAxis(200); // é≤Çï`âÊ
-
-		// âÒì]
-		ofRotateZ(rotateZ);
-		// âÒì]ÇµÇΩé≤ÇäÓèÄÇ…â^ìÆ
-		ofTranslate(moveX, moveY);
-		// ofDrawAxis(200);
-
-		// ï∂éöÇï`âÊ
-		int shrink = GLOBALRADIUS;
-
-		ofPushStyle();
-		ofSetColor(col);
-		font.drawString(name, -font.stringWidth(name) / 2, 0); // ï∂éöÇï`âÊ
-		ofPopStyle();
-		// ofRect(0, 0, 100, 100);
-		ofPopMatrix();
 	}
 };
 
@@ -91,81 +45,88 @@ private:
 	float windowWidth;
 	float windowHeight;
 
-	float fLineHeight;
-	int currentNameTextSize;
-	static const int locationSize = 5;
+	ofFbo fbo;
+
+	ofTrueTypeFont font;
+	static const int locationSize = 7;
 
 	string textFiles[locationSize];
-	vector <string> participants[locationSize];
-
-	float zAxis = 0;
-	float xAxis = 60;
-	float moveAxis = 0;
-	float TestZ = 0;
-	float k = 1;
-
-	vector <ArtistName> names;
-
-	int TestNameNum = 200;
+	vector <ArtistName> artistNames;
 
 public:
 	void setup(float _windowWidth, float _windowHeight) {
 		windowWidth = _windowWidth;
 		windowHeight = _windowHeight;
+		fbo.allocate(windowWidth, windowHeight, GL_RGB);
+
+		font.load("font/OCRB.TTF", 10);
 
 		textFiles[0] = "Tokyo College of Music";
 		textFiles[1] = "Tokyo Denki University";
 		textFiles[2] = "BankART Station";
 		textFiles[3] = "Goethe-Institut Tokyo";
-		textFiles[4] = "ZKM";
+		textFiles[4] = "Festival Futura";
+		textFiles[5] = "Scenkonst Museet";
+		textFiles[6] = "ZKM";
 
-		// txtÉtÉ@ÉCÉãÇ©ÇÁñºëOì«Ç›çûÇ›
 		for (int i = 0; i < locationSize; i++) {
 			ofBuffer buffer = ofBufferFromFile("text/" + textFiles[i] + ".txt");
 			if (buffer.size()) {
 				for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
 					string line = *it;
 					if (line.empty() == false) {
-						// äeâÔèÍÇÃéQâ¡é“Çäiî[ [âÔèÍidx][éQâ¡é“idx]
-						participants[i].push_back(line);
+						ArtistName setName;
+						setName.setName(line);
+						artistNames.push_back(setName);
 					}
 				}
 			}
 		}
 
-		// èâä˙âª
-		for (int i = 0; i < locationSize; i++) {
-			int locationArtistSize = participants[i].size();
-			for (int j = 0; j < locationArtistSize; j++) {
-				ArtistName setName;
-				setName.setup(participants[i][j]);
+		for (int i = 0; i < artistNames.size(); i++) {
+			artistNames[i].setup(i, (int)artistNames.size());
+		}
+	}
 
-				names.push_back(setName);
-			}
+
+	void update(float now) {
+		for (int i = 0; i < artistNames.size(); i++) {
+			artistNames[i].moveX = sin(artistNames[i].moveAngle) * artistNames[i].moveRangeX;
+			artistNames[i].moveY = cos(artistNames[i].moveAngle) * artistNames[i].moveRangeY;
+			artistNames[i].moveAngle += artistNames[i].speed * artistNames[i].plusMinus;
 		}
 
-		ofLog() << "ARTIST NUMBERS " << names.size();
+		fbo.begin();
+		ofClear(255);
+		for (int i = 0; i < artistNames.size(); i++) {
+			ofPushMatrix();
+			ofTranslate(windowWidth * 0.5 + artistNames[i].posX, windowHeight * 0.5 + artistNames[i].posY);
+			ofTranslate(artistNames[i].moveX, artistNames[i].moveY);
+			ofPushStyle();
+			float r = 0;
+			float g = 155;
+			float b = 214;
+			ofSetColor(r, g, b, artistNames[i].alpha);
+			font.drawString(artistNames[i].name, -font.stringWidth(artistNames[i].name) * 0.5, 0);
+			ofPopStyle();
+			ofPopMatrix();
+		}
+		fbo.end();
 	}
 
-	void update() {
-		
-	}
 
 	void draw() {
-		ofBackground(0);
-
-		for (int i = 0; i < TestNameNum; i++) {
-			names[i].dispName();
-			names[i].update();
-		}
+		ofPushMatrix();
+#ifdef TARGET_LINUX_ARM
+		ofTranslate(windowHeight, 0);
+		ofRotate(90);
+#endif
+		fbo.draw(0, 0);
+		ofPopMatrix();
 	}
 
 
-	void start() {
-	}
+	void start() {}
 
-	void stop() {
-		// ofLog() << "RESET";
-		// ofSetColor(255);
-	}
+	void stop() {}
 };

@@ -50,9 +50,6 @@
     <ClInclude Include="..\..\..\addons\ofxShuffleText\src\ofxShuffleText.h">
       <Filter>addons\ofxShuffleText\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\FaceRectDotView.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\NodeAndEdgeView.h">
       <Filter>src</Filter>
     </ClInclude>
