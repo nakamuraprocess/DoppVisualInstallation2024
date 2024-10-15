@@ -74,6 +74,17 @@ make Release -C openFrameworks/apps/myApps/DoppVisualInstallation2024
 ```bash
 make RunRelease -C openFrameworks/apps/myApps/DoppVisualInstallation2024
 ```
+### 自動起動の設定 ###
+```bash
+nano .bash_profile
+```
+bash_profileの下に下記コマンドを追加する
+```bash
+make RunRelease -C openFrameworks/apps/myApps/DoppVisualInstallation2024
+```
+```bash
+sudo reboot
+```
 ### ※備考 ###
 新しいプロジェクトを作成する（projectGeneratorは実行できないためemptyExampleをコピー）
 ```bash
