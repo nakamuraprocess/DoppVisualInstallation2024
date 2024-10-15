@@ -23,8 +23,8 @@ public:
 		name = artistName;
 	}
 	
-	void setup(int counter, int size) {
-		angle = ofMap(counter, 0.0, (float)size, 0.0, TWO_PI);
+	void setup() {
+		angle = ofRandom(0.0, TWO_PI);
 		radiusX = ofRandom(50, 240);
 		radiusY = ofMap(radiusX, 50, 240, 120, 500);
 		posX = cos(angle) * radiusX;
@@ -34,8 +34,8 @@ public:
 		moveAngle = ofRandom(0, 360);
 		moveRangeX = 16;
 		moveRangeY = 7;
-		alpha = ofRandom(220, 255);
 		speed = ofRandom(0.01, 0.04);
+		alpha = ofRandom(220, 255);
 		plusMinus = (ofRandom(0, 1) < 0.5) ? -1 : 1;
 	}
 };
@@ -84,7 +84,7 @@ public:
 		}
 
 		for (int i = 0; i < artistNames.size(); i++) {
-			artistNames[i].setup(i, (int)artistNames.size());
+			artistNames[i].setup();
 		}
 	}
 
