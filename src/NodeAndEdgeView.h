@@ -8,7 +8,7 @@ private:
 
 	ofFbo fbo;
 	
-	static const int pointMaxSize = 800;
+	static const int pointMaxSize = 400;
 	float radius = 400;
 	float radiusLargeCircle = 240;
 	float velocity = 0.1;
@@ -60,7 +60,7 @@ public:
 			float r = 0;
 			float g = 155;
 			float b = 214;
-			float a = ofClamp(point[j].z, 5, 200);
+			float a = ofClamp(point[j].z, 100, 200);
 			ofSetColor(r, g, b, a);
 			for (int k = j + 1; k < pointMaxSize; k++) {
 				if (ofDist(point[j].x, point[j].y, point[j].z, point[k].x, point[k].y, point[k].z) < distance) {
