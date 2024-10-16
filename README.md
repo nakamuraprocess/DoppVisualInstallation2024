@@ -78,9 +78,10 @@ make RunRelease -C openFrameworks/apps/myApps/DoppVisualInstallation2024
 ```bash
 nano .bash_profile
 ```
-bash_profileの下に下記コマンドを追加する
+bash_profileに下記のDISPLAYと実行ファイルのパスを追加する
 ```bash
-make RunRelease -C openFrameworks/apps/myApps/DoppVisualInstallation2024
+export DISPLAY=:0
+openFrameworks/apps/myApps/DoppVisualInstallation2024/bin/DoppVisualInstallation2024
 ```
 ```bash
 sudo reboot
