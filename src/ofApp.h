@@ -42,7 +42,7 @@ class ofApp : public ofBaseApp {
 		float windowWidth;
 		float windowHeight;
 		
-		static const int faceDataMaxSize = 159;
+		static const int faceDataMaxSize = 167;
 		ofImage imageFacesData[faceDataMaxSize];
 		
 		float timerLapTime = 0.0;
