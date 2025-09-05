@@ -39,8 +39,8 @@ void ofApp::setup(){
     sceneIndexList.push_back(3);
     sceneIndexList.push_back(4);
 
-    random_device seed_gen;
-    mt19937 engine(seed_gen());
+	std::random_device seed_gen;
+	std::mt19937 engine(seed_gen());
     std::shuffle(sceneIndexList.begin(), sceneIndexList.end(), engine);
 
     for (int i = 1; i < viewMaxSize + (viewMaxSize - 2); i += 2) {
