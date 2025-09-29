@@ -11,7 +11,7 @@ private:
 
 	float fLineHeight;
 	int currentNameTextSize;
-	static const int locationSize = 5;
+	static const int locationSize = 6;
 	static const int nameTextRange = 28;
 	int locationCounter = 0;
 	int participantCounter = 0;
@@ -36,6 +36,8 @@ public:
 		locations[2] = "- BankART Station";
 		textFiles[3] = "Goethe-Institut Tokyo";
 		locations[3] = "- Goethe-Institut Tokyo";
+        textFiles[4] = "Festival Futura";
+        locations[4] = "- Festival Futura [France]";
 		textFiles[4] = "ZKM";
 		locations[4] = "- ZKM [Germany]";
 
@@ -50,20 +52,7 @@ public:
 				}
 			}
 
-			if (textFiles[i] == "Goethe-Institut Tokyo") {
-				ofBuffer buffer = ofBufferFromFile("text/Festival Futura.txt");
-				participants[i].push_back(" ");
-				participants[i].push_back("- Festival Futura [France]");
-				if (buffer.size()) {
-					for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
-						string line = *it;
-						if (line.empty() == false) {
-							participants[i].push_back(line);
-						}
-					}
-				}
-			}
-			else if (textFiles[i] == "ZKM") {
+            if (textFiles[i] == "ZKM") {
 				ofBuffer buffer = ofBufferFromFile("text/Scenkonst Museet.txt");
 				participants[i].push_back(" ");
 				participants[i].push_back("- Scenkonst Museet [Sweeden]");
