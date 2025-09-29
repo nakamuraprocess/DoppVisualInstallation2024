@@ -38,8 +38,8 @@ public:
 		locations[3] = "- Goethe-Institut Tokyo";
         textFiles[4] = "Festival Futura";
         locations[4] = "- Festival Futura [France]";
-		textFiles[4] = "ZKM";
-		locations[4] = "- ZKM [Germany]";
+		textFiles[5] = "ZKM";
+		locations[5] = "- ZKM [Germany]";
 
 		for (int i = 0; i < locationSize; i++) {
 			ofBuffer buffer = ofBufferFromFile("text/"+ textFiles[i] + ".txt");
